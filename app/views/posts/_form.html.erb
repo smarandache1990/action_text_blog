@@ -1,0 +1,14 @@
+<%= form_for @post do |f| %>
+    <%# [TO-DO] "Error msg are handled in alerts partial, this can be implented later for display error msg's regarding a post" = render 'layouts/error_messages', f: f.object %> 
+    <div>
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+    </div>
+
+    <div>
+        <%= f.label :body %>
+        <%= f.rich_text_area :body %>
+    </div>
+
+    <%= f.submit "Submit", disable_with: 'Submiting...' %>
+<% end %>
