@@ -4,4 +4,15 @@
     <%= @post.body %>
 </div>
 
-<%= link_to "Back", posts_url %>
+<%= link_to "Back", posts_url %><br>
+<%= link_to "Edit", edit_post_url(@post) %><br>
+<%= link_to "Delete", post_url(@post), data: { 
+    turbo_method: :delete,
+    turbo_confirm: 'Are you sure?' } %>
+
+<h2>Add Comment</h2>
+
+<%= render 'comments/form' %>
+
+<h2>Comments</h2>
+<%= render @post.comments %>

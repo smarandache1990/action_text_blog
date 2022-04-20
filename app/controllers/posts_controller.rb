@@ -18,16 +18,45 @@ class PostsController < ApplicationController
           redirect_to @post
         else
           flash[:error] = "Something went wrong"
-          render 'new'
+          render :new, status: :unprocessable_entity
         end
     end
+
+    def edit
+        @post = Post.find(params[:id])
+    end
+
+    def update
+        @post = Post.find(params[:id])
+
+        if @post.update(post_params)
+          flash[:success] = "Post was successfully updated"
+          redirect_to @post
+        else
+          flash[:error] = "Something went wrong"
+          render :edit, status: :unprocessable_entity
+        end
+    end
+    
+    def destroy
+        @post = Post.find(params[:id])
+
+        if @post.destroy
+            flash[:success] = 'Post was successfully deleted.'
+            redirect_to posts_url, status: :see_other
+        else
+            flash[:error] = 'Something went wrong'
+            redirect_to posts_url, status: :unprocessable_entity
+        end
+    end
+    
     
     
 
     private
 
     def post_params
-        params.require(:post).permit(:title, :body)
+        params.require(:post).permit(:title, :body, :status)
     end
     
 end
