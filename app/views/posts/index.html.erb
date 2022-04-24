@@ -3,9 +3,21 @@
 <h2>This blog currently has <%= pluralize(Post.public_count, "post") %> and counting </h2>
 
 <% @posts.each do |post| %>
-    <h1><%= link_to post.title, post_url(post) %></h1>
-    <p><%= post.body %></p>
-    <br>
+    <div class="card text-center w-75">
+        <div class="card-header">
+            <p>Created at <%= time_ago_in_words(post.created_at) %></p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"> <%= link_to post.title, post_url(post) %> </h5>
+            <p class="card-text"> <%= post.body %> </p>
+            <%= link_to "View Post", post_url(post), class:"btn btn-secondary" %>
+        </div>
+        <% if post.updated_at - post.created_at >= 1 %>
+            <div class="card-footer text-muted">
+                <p> Updated <%= time_ago_in_words(post.updated_at - post.created_at) %> ago. </p>
+            </div>
+        <% end %>
+    </div>
 <% end %>
 
 <%= link_to "New Post", new_post_url %>

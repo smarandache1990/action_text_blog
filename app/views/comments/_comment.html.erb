@@ -1,14 +1,19 @@
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.commenter %>
-  </p>
+<!-- Prevents empty comment from being diplayed -->
+<% unless comment.commenter == nil %>
+  <div class="container h-100 p-5 bg-light border rounded-3">
+    <p>
+      <strong>Commenter:</strong>
+      <%= comment.commenter %>
+    </p>
 
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
+    <p>
+      <strong>Comment:</strong>
+      <%= comment.body %>
+    </p>
 
-  <%= link_to "Delete", [comment.post, comment], data: {
+    <%= link_to "Delete", [comment.post, comment], data: {
       turbo_method: :delete,
       turbo_confirm: "Are you sure?"
-  } %>
+      }, class:"btn btn-outline-secondary" %>
+  </div>
+<% end %>
