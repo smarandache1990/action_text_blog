@@ -11,29 +11,35 @@
         <li class="nav-item">
           <%= link_to "All Posts", posts_url, class:"nav-link active" %>
         </li>
-        <li class="nav-item">
-          <%= link_to "New Post", new_post_url, class:"nav-link" %>
-        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "New Post", new_post_url, class:"nav-link" %>
+          </li>
+        <% end %>
       </ul>
       
-      <ul class="navbar-nav justify-content-end">
-        <li class="nav-item">
-          <%= link_to "Sign in", "#", class:"nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Sign up", "#", class:"nav-link" %>
-        </li>  
-        <% if true %>
+      <ul class="navbar-nav justify-content-end">  
+        <% if user_signed_in? %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              User Name Here
+              <%= current_user.email %>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li> <%= link_to "New Post", new_post_url, class:"dropdown-item" %> </li>
               <li><hr class="dropdown-divider"></li>
+              <li> <%= link_to "Sign Out", destroy_user_session_url, class:"dropdown-item", data: {
+                turbo_method: :delete,
+                turbo_confirm: "Are you sure you want to sign out?"
+              } %> </li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Sign in", new_user_session_url, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign up", new_user_registration_url, class:"nav-link" %>
           </li>
         <% end %>
       </ul>
